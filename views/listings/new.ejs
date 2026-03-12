@@ -1,19 +1,22 @@
 <% layout("layouts/boilerplate") %>
-<body>
+
     <div class="row">
         <div class="col-8 offset-2">
     <h1>Create New Listing</h1>
     <br>
-    <form method="POST" action="/listings">
+    <form method="POST" action="/listings" novalidate class="needs-validation" >
         
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" name="title" id="title" required placeholder="Enter title" class="form-control">
+            <input type="text" name="listing[title]" id="title" required placeholder="Enter title" class="form-control">
+            <div class="valid-feedback">Title looks amazing</div>
+            <div class="invalid-feedback">Please enter a title</div>
         </div>
 
         <div class="mb-3">
             <label for="description">Description</label>
-            <textarea name="description" id="description" cols="30" rows="5" required class="form-control"></textarea>
+            <textarea name="listing[description]" id="description" cols="30" rows="5" required class="form-control"></textarea>
+            <div class="invalid-feedback">Please enter a short discription</div>
         </div>
 
         <div class="mb-3">
@@ -24,18 +27,21 @@
         <div class="row">
             <div class="mb-3 col-md-4">
             <label for="price">Price</label>
-            <input type="number" name="price" id="price" required placeholder="Enter price" class="form-control">
+            <input type="number" name="listing[price]" id="price" required placeholder="Enter price" class="form-control">
+            <div class="invalid-feedback">Please enter the price</div>
             </div>
         
             <div class="mb-3 col-md-8">
             <label for="country">Country</label>
             <input type="text" name="listing[country]" id="country" required placeholder="Enter country" class="form-control">
+            <div class="invalid-feedback">Please enter the country</div>
             </div>
 
         </div>
             <div class="mb-3 ">
                 <label for="location">Location</label>
-                <input type="text" name="location" id="location" required placeholder="Enter location" class="form-control">
+                <input type="text" name="listing[location]" id="location" required placeholder="Enter location" class="form-control">
+                <div class="invalid-feedback">Please enter the location</div>
             </div>
         <button class="btn btn-dark add-btn">Add</button>
         <br>
@@ -43,4 +49,4 @@
     </form>
     </div>
     </div>
-</body>
+

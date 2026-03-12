@@ -5,39 +5,45 @@
    
     <br>
     <h3>Edit Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PATCH">
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PATCH" novalidate class="needs-validation">
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <textarea name="title" id="title" cols="30" rows="1" class="form-control"><%= listing.title %></textarea>
+            <textarea name="title" id="title" cols="30" rows="1" class="form-control" required><%= listing.title %></textarea>
+            <div class="invalid-feedback">Please enter a title</div>
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" cols="30" rows="4" class="form-control"><%= listing.description %></textarea>
+            <textarea name="description" id="description" cols="30" rows="4" class="form-control" required><%= listing.description %></textarea>
+            <div class="invalid-feedback">Please enter a short discription</div>
         </div>
 
 
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input name="image" id="image" type="text" value="<%= listing.image.url %>" class="form-control">
+            <input name="image" id="image" type="text" value="<%= listing.image.url %>" class="form-control" required>
+            <div class="invalid-feedback">Please enter a image url</div>
         </div>
 
         <div class="row">
             
             <div class="mb-3">
             <label for="price" class="form-label">Price</label>
-            <input name="price" id="price" value="<%= listing.price %>" type="number" class="form-control">
+            <input name="price" id="price" value="<%= listing.price %>" type="number" class="form-control" required>
+            <div class="invalid-feedback">Please enter the price</div>
             </div>
 
             <div class="mb-3">
             <label for="country" class="form-label">Country</label>
-            <textarea name="country" id="country" cols="30" rows="1" class="form-control"><%= listing.country %></textarea>
+            <textarea name="country" id="country" cols="30" rows="1" class="form-control" required><%= listing.country %></textarea>
+            <div class="invalid-feedback">Please enter the country</div>
             </div>
         </div>
         <div class="mb-3">
             <label for="location" class="form-label">Location</label>
-            <textarea name="location" id="location" cols="30" rows="1" class="form-control"><%= listing.location %></textarea>
+            <textarea name="location" id="location" cols="30" rows="1" class="form-control" required><%= listing.location %></textarea>
+            <div class="invalid-feedback">Please enter the location</div>
         </div>
 
         <button type="submit" class="btn btn-dark edit-btn">Update</button>
@@ -47,3 +53,4 @@
 
      </div>
 </div>
+<script href="/js/script.js"></script>

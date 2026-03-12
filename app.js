@@ -28,21 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// app.get('/listings', async (req, res) => {
-//     let sampleListings = new Listing({
-//         title: 'Cozy Apartment in Downtown',
-//         description: 'A cozy apartment located in the heart of downtown, close to all amenities.',
-//         price: 1200,
-//         location: 'Downtown',
-//         country: 'USA'
-//     })
-
-//     await sampleListings.save();
-//     console.log('Sample listing saved to database');
-//     res.send('Sample listing saved to database');
-// });
-
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
