@@ -1,0 +1,49 @@
+<% layout("layouts/boilerplate") %>
+<div class="row">
+    <div class="col-8 offset-2">
+
+   
+    <br>
+    <h3>Edit Listing</h3>
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PATCH">
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <textarea name="title" id="title" cols="30" rows="1" class="form-control"><%= listing.title %></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" cols="30" rows="4" class="form-control"><%= listing.description %></textarea>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input name="image" id="image" type="text" value="<%= listing.image.url %>" class="form-control">
+        </div>
+
+        <div class="row">
+            
+            <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input name="price" id="price" value="<%= listing.price %>" type="number" class="form-control">
+            </div>
+
+            <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <textarea name="country" id="country" cols="30" rows="1" class="form-control"><%= listing.country %></textarea>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <textarea name="location" id="location" cols="30" rows="1" class="form-control"><%= listing.location %></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-dark edit-btn">Update</button>
+        <br>
+        <br/>
+    </form>
+
+     </div>
+</div>
