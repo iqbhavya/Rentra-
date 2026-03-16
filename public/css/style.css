@@ -125,3 +125,95 @@ body{
     position: relative;
     left: 30px; 
 }
+
+/* Review Section */
+
+/* ── Review Form ── */
+.review-section h4 {
+    font-family: 'Georgia', serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.review-section .review-label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Stars */
+#stars {
+    display: flex;
+    gap: 4px;
+    font-size: 32px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+#stars span {
+    color: #ccc;
+    transition: color 0.15s, transform 0.1s;
+}
+
+#stars span:hover {
+    transform: scale(1.2);
+}
+
+/* Textarea */
+.review-section textarea {
+    border-radius: 8px !important;
+    border: 1px solid #ccc !important;
+    resize: none;
+}
+
+.review-section textarea:focus {
+    border-color: #888 !important;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.08) !important;
+}
+
+/* Submit button */
+.review-submit-btn {
+    border-radius: 8px;
+    padding: 8px 24px;
+    background: #ff0e0e;
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+}
+
+.review-submit-btn:hover {
+    background: #444;
+    color: #fff;
+}
+
+/* ── Review Cards ── */
+.review-card {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.2s;
+}
+
+.review-card:hover {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.review-card .review-stars {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.review-card .review-comment {
+    margin: 0;
+    font-size: 15px;
+    color: #333;
+}
+
+.delete-review-btn {
+    margin-top: 8px;
+    font-size: 13px;
+    padding: 3px 12px;
+    border-radius: 6px;
+}
