@@ -7,7 +7,7 @@
         </div>
         <div class="col-6 offset-3 show-card">
             <div class="card">
-                <img src="<%= listing.image.url %>>" class="card-img-top show-image" alt="listing_image">
+                <img src="<%= listing.image.url %>" class="card-img-top show-image" alt="listing_image">
                 <div class="card-body">
                     <p class="card-text">
                         <%= listing.description %> <br />
@@ -58,12 +58,12 @@
                 <hr />
                 <h4>All Reviews</h4>
 
-                <% for(review of listing.reviews) { %>
+                <% for(let review of listing.reviews) { %>
                     <div class="review-card mb-3">
                         <h5 class="card-title">Bhavya</h5>
                         <div class="review-stars">
                             <% for(let i=1; i <=5; i++) { %>
-                                <span style="color: <%= i <= review.rating ? '#f5a623' : '#ccc' %>;">★</span>
+                                <span style="color: <%= i <= review.rating ? '#f5a623' : '#ccc' %> ">★</span>
                                 <% } %>
                         </div>
                         <p class="review-comment">
@@ -81,14 +81,7 @@
 
         </div>
     </div>
+<script src="/js/review.js"></script>
 
-    <script>
-        const stars = document.querySelectorAll('#stars span');
 
-        stars.forEach(star => {
-            star.onclick = () => {
-                document.getElementById('hiddenRating').value = star.dataset.val;
-                stars.forEach(s => s.style.color = s.dataset.val <= star.dataset.val ? '#f5a623' : '#ccc');
-            };
-        });
-    </script>
+    
