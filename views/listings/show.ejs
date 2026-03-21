@@ -9,16 +9,14 @@
             <div class="card">
                 <img src="<%= listing.image.url %>" class="card-img-top show-image" alt="listing_image">
                 <div class="card-body">
-                    <p class="card-text">
-                        <%= listing.description %> <br />
-                            &#8377; <%= listing.price.toLocaleString("en-IN") %> <br />
-                                <%= listing.location %> <br />
-                                    <%= listing.country %>
-                    </p>
-
+                    <p class="card-text">Owned by <i><%= listing.owner.username %></i></p>
+                    <p class="card-text"><%= listing.description %> </p>
+                    <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %> </p>
+                    <p class="card-text"><%= listing.location %> </p>
+                    <p class="card-text"><%= listing.country %></p>
                 </div>
             </div>
-
+            <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
             <div class="btns offset-1" style="column-gap: 20px;">
                 <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn" style="width: 5rem">Edit</a>
                 <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
@@ -26,9 +24,11 @@
                 </form>
 
             </div>
-
+            <% } %>
+            
             <div class="mb-3 review-section">
                 <hr>
+                <% if(currUser ){ %>
                 <h4>Leave a Review</h4>
 
                 <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -54,13 +54,14 @@
 
                     <button class=" review-submit-btn ">Submit</button>
                 </form>
-
-                <hr />
+                <hr/>
+            <% } %>
+                
                 <h4>All Reviews</h4>
 
                 <% for(let review of listing.reviews) { %>
                     <div class="review-card mb-3">
-                        <h5 class="card-title">Bhavya</h5>
+                        <h5 class="card-title"><%= review.author.username %></h5>
                         <div class="review-stars">
                             <% for(let i=1; i <=5; i++) { %>
                                 <span style="color: <%= i <= review.rating ? '#f5a623' : '#ccc' %> ">★</span>
@@ -71,8 +72,11 @@
                         </p>
                         <form method="POST"
                             action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+
+                            <% if(currUser && currUser._id.equals(review.author._id)){ %>
                             <button type="submit"
                                 class="btn btn-sm btn-outline-danger delete-review-btn">Delete</button>
+                            <% } %>
                         </form>
                     </div>
 
@@ -82,3 +86,7 @@
         </div>
     </div>
     <script src="/js/review.js"></script>
+
+    
+
+    
