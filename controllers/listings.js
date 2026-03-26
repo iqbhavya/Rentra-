@@ -1,5 +1,6 @@
 const Listing = require("../models/listing");
 
+
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     res.render('listings/index.ejs', { listings: allListings });
@@ -7,6 +8,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.renderNewForm = (req, res) => {
+    console.log(req.body.listing);
     res.render('listings/new.ejs');
 };
 
@@ -19,29 +21,28 @@ module.exports.showListings = async (req, res) => {
         }
     }).populate("owner");
     console.log(listing.reviews);
-    if(!listing){
+    if (!listing) {
         req.flash("error", "Listing you requested doesn't exist");
         res.redirect('/listings');
         console.log("error got")
 
-    } else{
+    } else {
         res.render('listings/show.ejs', { listing: listing });
     }
 
 };
 
+
 module.exports.createListing = async (req, res, next) => {
 
-    const { title, image, description, price, location, country } = req.body.listing;
-    const newListing = new Listing({
-        title,
-        image:{ url: image, filename: "" },
-        description,
-        price,
-        location,
-        country
-    });
+    let url = req.file.path;
+    let filename = req.file.filename;
+
+
+    const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+    newListing.image = { filename, url };
+
     await newListing.save();
     req.flash("success", "New Listing Created!");
     res.redirect('/listings');
@@ -50,23 +51,38 @@ module.exports.createListing = async (req, res, next) => {
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
+    if(!listing){
+        req.flash("error", "Listing you requested for does not exist!");
+        res.redirect("/listings");
+    }
+
+    let originalImageUrl = listing.image.url;
+    originalImageUrl.replace("/upload","/upload/w_250");
     res.render('listings/edit.ejs', { listing });
 };
 
 module.exports.updateListing = async (req, res) => {
-    const { id } = req.params;
+    let { id } = req.params;
+
     // 🔥 fix image before update
-    if (req.body.listing.image && req.body.listing.image.trim() !== "") {
-        req.body.listing.image = {
-            url: req.body.listing.image,
-            filename: ""
-        };
-    } else {
-        delete req.body.listing.image;
+    // if (req.body.listing.image && req.body.listing.image.trim() !== "") {
+    //     req.body.listing.image = {
+    //         url: req.body.listing.image,
+    //         filename: ""
+    //     };
+    // } else {
+    //     delete req.body.listing.image;
+    // }
+
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    if (typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = { filename, url };
+        await listing.save();
     }
 
-    await Listing.findByIdAndUpdate(id, req.body.listing);
-    req.flash("success","Listing Updated!");
+    req.flash("success", "Listing Updated!");
     res.redirect(`/listings/${id}`);
 };
 

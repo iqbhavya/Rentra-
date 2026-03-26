@@ -9,84 +9,97 @@
             <div class="card">
                 <img src="<%= listing.image.url %>" class="card-img-top show-image" alt="listing_image">
                 <div class="card-body">
-                    <p class="card-text">Owned by <i><%= listing.owner.username %></i></p>
-                    <p class="card-text"><%= listing.description %> </p>
-                    <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %> </p>
-                    <p class="card-text"><%= listing.location %> </p>
-                    <p class="card-text"><%= listing.country %></p>
+                    <p class="card-text">Owned by <i>
+                            <%= listing.owner.username %>
+                        </i></p>
+                    <p class="card-text">
+                        <%= listing.description %>
+                    </p>
+                    <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %>
+                    </p>
+                    <p class="card-text">
+                        <%= listing.location %>
+                    </p>
+                    <p class="card-text">
+                        <%= listing.country %>
+                    </p>
                 </div>
             </div>
             <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
-            <div class="btns offset-1" style="column-gap: 20px;">
-                <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn" style="width: 5rem">Edit</a>
-                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-                    <button type="submit" class="btn btn-dark  edit-btn">Delete</button>
-                </form>
+                <div class="btns offset-1" style="column-gap: 20px;">
+                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn"
+                        style="width: 5rem">Edit</a>
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                        <button type="submit" class="btn btn-dark  edit-btn">Delete</button>
+                    </form>
 
-            </div>
-            <% } %>
-            
-            <div class="mb-3 review-section">
-                <hr>
-                <% if(currUser ){ %>
-                <h4>Leave a Review</h4>
+                </div>
+                <% } %>
 
-                <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-                    <input type="hidden" name="review[rating]" id="hiddenRating" value="1">
+                    <div class="mb-3 review-section">
+                        <hr>
+                        <% if(currUser ){ %>
+                            <h4>Leave a Review</h4>
 
-                    <div class="mb-3 mt-3">
-                        <label class="review-label">Rating</label>
-                        <div id="stars">
-                            <span data-val="1">★</span>
-                            <span data-val="2">★</span>
-                            <span data-val="3">★</span>
-                            <span data-val="4">★</span>
-                            <span data-val="5">★</span>
-                        </div>
-                    </div>
+                            <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate
+                                class="needs-validation">
+                                <input type="hidden" name="review[rating]" id="hiddenRating" value="1">
 
-                    <div class="mb-3">
-                        <label for="comment" class="review-label">Comments</label>
-                        <textarea name="review[comment]" id="comment" cols="30" rows="3" class="form-control"
-                            required></textarea>
-                        <div class="invalid-feedback">Please add some comments for review</div>
-                    </div>
+                                <div class="mb-3 mt-3">
+                                    <label class="review-label">Rating</label>
+                                    <div id="stars">
+                                        <span data-val="1">★</span>
+                                        <span data-val="2">★</span>
+                                        <span data-val="3">★</span>
+                                        <span data-val="4">★</span>
+                                        <span data-val="5">★</span>
+                                    </div>
+                                </div>
 
-                    <button class=" review-submit-btn ">Submit</button>
-                </form>
-                <hr/>
-            <% } %>
-                
-                <h4>All Reviews</h4>
+                                <div class="mb-3">
+                                    <label for="comment" class="review-label">Comments</label>
+                                    <textarea name="review[comment]" id="comment" cols="30" rows="3"
+                                        class="form-control" required></textarea>
+                                    <div class="invalid-feedback">Please add some comments for review</div>
+                                </div>
 
-                <% for(let review of listing.reviews) { %>
-                    <div class="review-card mb-3">
-                        <h5 class="card-title"><%= review.author.username %></h5>
-                        <div class="review-stars">
-                            <% for(let i=1; i <=5; i++) { %>
-                                <span style="color: <%= i <= review.rating ? '#f5a623' : '#ccc' %> ">★</span>
-                                <% } %>
-                        </div>
-                        <p class="review-comment">
-                            <%= review.comment %>
-                        </p>
-                        <form method="POST"
-                            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-
-                            <% if(currUser && currUser._id.equals(review.author._id)){ %>
-                            <button type="submit"
-                                class="btn btn-sm btn-outline-danger delete-review-btn">Delete</button>
+                                <button class=" review-submit-btn ">Submit</button>
+                            </form>
+                            <hr />
                             <% } %>
-                        </form>
-                    </div>
+                                <% if(listing.reviews.length> 0) {%>
+                                    <h4>All Reviews</h4>
 
-                    <% } %>
-            </div>
+                                    <% for(let review of listing.reviews) { %>
+                                        <div class="review-card mb-3">
+                                            <h5 class="card-title">
+                                                <%= review.author.username %>
+                                            </h5>
+                                            <div class="review-stars">
+                                                <% for(let i=1; i <=5; i++) { %>
+                                                    <span
+                                                        style="color: <%= i <= review.rating ? '#f5a623' : '#ccc' %> ">★</span>
+                                                    <% } %>
+                                            </div>
+                                            <p class="review-comment">
+                                                <%= review.comment %>
+                                            </p>
+                                            <form method="POST"
+                                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+
+                                                <% if(currUser && currUser._id.equals(review.author._id)){ %>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-review-btn">Delete</button>
+                                                    <% } %>
+                                            </form>
+                                        </div>
+
+                                        <% } %>
+                                            <% } %>
+                    </div>
 
         </div>
+        
     </div>
     <script src="/js/review.js"></script>
-
-    
-
-    
+   
