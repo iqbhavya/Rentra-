@@ -84,4 +84,21 @@ module.exports.destroyListing = async (req, res) => {
     res.redirect('/listings');
 };
 
+module.exports.search = async (req, res) => {
+    let { q } = req.query;
+    if (!q || q.trim() === "") {
+        return res.redirect("/listings");
+    }
 
+    // Find listings matching the query
+    let listings = await Listing.find({
+        $or: [
+            { location: { $regex: q, $options: "i" } },
+            { title: { $regex: q, $options: "i" } },
+            { country: { $regex: q, $options: "i" } }
+        ]
+    });
+
+    // We use "listings" as the key here to match your EJS loop
+    res.render("listings/index.ejs", { listings }); 
+};
