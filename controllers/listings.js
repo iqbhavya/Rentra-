@@ -64,15 +64,7 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
 
-    // 🔥 fix image before update
-    // if (req.body.listing.image && req.body.listing.image.trim() !== "") {
-    //     req.body.listing.image = {
-    //         url: req.body.listing.image,
-    //         filename: ""
-    //     };
-    // } else {
-    //     delete req.body.listing.image;
-    // }
+    
 
     let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     if (typeof req.file !== "undefined") {
@@ -91,3 +83,5 @@ module.exports.destroyListing = async (req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect('/listings');
 };
+
+

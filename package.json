@@ -2,7 +2,7 @@
   "engines":{
     "node": "22.18.0"
   },
-  "name": "Rentra",
+  "name": "rentra",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
